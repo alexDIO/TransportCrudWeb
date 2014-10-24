@@ -12,6 +12,7 @@ public class FilterForMap implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         String className = filterConfig.getInitParameter("class");
         try {
+            System.out.println("className="+className);
             holder = (TransportMapHolder) Class.forName(className).newInstance();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

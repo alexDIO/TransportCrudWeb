@@ -8,7 +8,7 @@ import java.util.Properties;
  * Created by olomakovskyi on 9/3/2014.
  */
 public class TransportPropertiesHolder {
-    private static final String PROPERTIES_FILE_NAME = "transport.properties";
+//    private static final String PROPERTIES_FILE_NAME = "transport.properties";
     private static final String SOURCE = "source";
     private static final String CSV_FILENAME = "csv.filename";
     private static final String TEXT_FILENAME = "text.filename";
@@ -27,9 +27,9 @@ public class TransportPropertiesHolder {
 
     private final Properties transportProperties;
 
-    public TransportPropertiesHolder() throws IOException {
+    public TransportPropertiesHolder(String fileName) throws IOException {
         transportProperties = new Properties();
-        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
+        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(fileName);
         transportProperties.load(stream);
     }
 

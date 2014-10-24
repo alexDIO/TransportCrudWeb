@@ -1,6 +1,5 @@
 package transport.storages;
 
-import transport.TransportStorageManager;
 import transport.classes.*;
 
 import java.io.IOException;
@@ -16,16 +15,6 @@ public abstract class TransportStorageDBAbstract implements TransportStorage {
         TransportPojo newPojo = TransportManager.convertTransportToPojo(newTransport);
 
         writePojo(newPojo);
-    }
-
-    @Override
-    public void updateTransport(int id) throws IOException {
-        Transport targetTransport = TransportManager.updateTransport(TransportStorageManager.storedCars.get(id));
-        TransportStorageManager.storedCars.put(id, targetTransport);
-
-        deleteTransport(id);
-
-        writePojo(TransportManager.convertTransportToPojo(targetTransport));
     }
 
     protected abstract void writePojo(TransportPojo inPojo);

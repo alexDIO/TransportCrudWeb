@@ -1,5 +1,10 @@
 package transport.classes;
 
+import hibernate.PassengerCarEntity;
+import hibernate.PassengerTransportEntity;
+import hibernate.TransportEntity;
+import hibernate.TruckEntity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -277,6 +282,27 @@ public class TransportManager {
         }
 
         return builder.toString();
+    }
+
+    public static TransportEntity convertPojoToTransportEntity(TransportPojo inPojo) {
+        TransportEntity resultTransport = TransportFactory.getTransportEntity(inPojo.getTransportType());
+
+        resultTransport.setId(inPojo.getId());
+        resultTransport.setMark(inPojo.getMark());
+        resultTransport.setColor(inPojo.getColor());
+        resultTransport.setManufactureYear(inPojo.getManufactureYear());
+        resultTransport.setEnergySource(inPojo.getEnergySource());
+
+        if (resultTransport instanceof PassengerTransportEntity) {
+            ((PassengerTransportEntity) resultTransport).setPassengersCount(inPojo.getPassengersCount());
+            if (resultTransport instanceof PassengerCarEntity) {
+                ((PassengerCarEntity) resultTransport).setTransmission(inPojo.getTransmission());
+            }
+        } else {
+            ((TruckEntity) resultTransport).setLoad(inPojo.getLoad());
+        }
+
+        return resultTransport;
     }
 
 }

@@ -15,11 +15,14 @@ import java.util.Map;
  * Created by olomakovskyi on 9/12/2014.
  */
 public class TransportStorageXLS implements TransportStorage {
-    private static TransportPropertiesHolder propertiesHolder = null;
+    private final TransportPropertiesHolder propertiesHolder;
+
+    public TransportStorageXLS(TransportPropertiesHolder propertiesHolder) {
+        this.propertiesHolder = propertiesHolder;
+    }
 
     @Override
     public void addTransport(TransportPojo inPojo) throws IOException {
-        propertiesHolder = new TransportPropertiesHolder();
         Transport newTransport = TransportManager.convertPojoToTransport(inPojo);
 //        TransportStorageManager.storedCars.put(newTransport.getId(), newTransport);
         TransportPojo newPojo = TransportManager.convertTransportToPojo(newTransport);
@@ -47,30 +50,6 @@ public class TransportStorageXLS implements TransportStorage {
             writePojoToExcel(row, newPojo);
             inFile.close();
         }
-
-        FileOutputStream outFile = new FileOutputStream(new File(propertiesHolder.getXlsFilename()));
-        workbook.write(outFile);
-        outFile.close();
-    }
-
-    @Override
-    public void updateTransport(int id) throws IOException {
-        Transport targetTransport = TransportManager.updateTransport(TransportStorageManager.storedCars.get(id));
-//        TransportStorageManager.storedCars.put(id, targetTransport);
-
-        FileInputStream inFile = new FileInputStream(new File(propertiesHolder.getXlsFilename()));
-        HSSFWorkbook workbook = new HSSFWorkbook(inFile);
-        Sheet sheet = workbook.getSheet(propertiesHolder.getXlsSheetName());
-        int lastRowIndex = sheet.getLastRowNum();
-
-        for (int i = 0; i < lastRowIndex; i++) {
-            sheet.getRow(i).getCell(0).setCellType(Cell.CELL_TYPE_STRING);
-            if (Integer.valueOf(sheet.getRow(i).getCell(0).getStringCellValue()) == id) {
-                writePojoToExcel(sheet.getRow(i), TransportManager.convertTransportToPojo(targetTransport));
-            }
-        }
-
-        inFile.close();
 
         FileOutputStream outFile = new FileOutputStream(new File(propertiesHolder.getXlsFilename()));
         workbook.write(outFile);
@@ -109,7 +88,6 @@ public class TransportStorageXLS implements TransportStorage {
 
     @Override
     public Map<Integer, Transport> getAllTransport() throws IOException {
-        propertiesHolder = new TransportPropertiesHolder();
         Map<Integer, Transport> resultMap = new HashMap<>();
         File transportFile = new File(propertiesHolder.getXlsFilename());
 

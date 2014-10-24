@@ -12,8 +12,6 @@ import java.util.Map;
 public interface TransportStorage {
     public void addTransport(TransportPojo inPojo) throws IOException;
 
-    public void updateTransport(int id) throws IOException;
-
     public void deleteTransport(int id) throws IOException;
 
     public Map<Integer, Transport> getAllTransport() throws IOException;

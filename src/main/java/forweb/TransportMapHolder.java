@@ -18,9 +18,11 @@ public class TransportMapHolder {
     private Map<Integer, Transport> storedTransport;
     private TransportStorage storage;
 
-    public TransportMapHolder(){
+
+    public TransportMapHolder(TransportStorageFactory factory){
+
         try {
-            TransportStorage storage = TransportStorageFactory.getStorage();
+            storage = factory.getStorage();
             storedTransport = storage.getAllTransport();
         } catch (TransportStorageException e) {
             System.out.println(e);
@@ -43,11 +45,8 @@ public class TransportMapHolder {
             }
         }
         try {
-            storage = TransportStorageFactory.getStorage();
             storage.addTransport(pojo);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransportStorageException e) {
             e.printStackTrace();
         }
 
@@ -56,11 +55,8 @@ public class TransportMapHolder {
 
     public void deleteTransport(int id){
         try {
-            storage = TransportStorageFactory.getStorage();
             storage.deleteTransport(id);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransportStorageException e) {
             e.printStackTrace();
         }
         storedTransport.remove(id);

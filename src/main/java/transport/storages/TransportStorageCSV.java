@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import transport.*;
 import transport.classes.Transport;
 import transport.classes.TransportManager;
@@ -26,8 +27,11 @@ import java.util.Map;
  * Created by olomakovskyi on 9/3/2014.
  */
 public class TransportStorageCSV implements TransportStorage {
+    private final TransportPropertiesHolder propertiesHolder;
 
-    private static TransportPropertiesHolder propertiesHolder = null;
+    public TransportStorageCSV(TransportPropertiesHolder propertiesHolder) {
+        this.propertiesHolder = propertiesHolder;
+    }
 
     @Override
     public void addTransport(TransportPojo inPojo) throws IOException {
@@ -39,17 +43,6 @@ public class TransportStorageCSV implements TransportStorage {
         //getting of all existing pojo from file
         Map<Integer, TransportPojo> pojoMap = getAllPojoFromFile();
         pojoMap.put(newPojo.getId(), newPojo);
-
-        writeAllPojoToFile(pojoMap);
-    }
-
-    @Override
-    public void updateTransport(int id) throws IOException {
-        Transport targetTransport = TransportManager.updateTransport(TransportStorageManager.storedCars.get(id));
-//        TransportStorageManager.storedCars.put(id, targetTransport);
-
-        Map<Integer, TransportPojo> pojoMap = getAllPojoFromFile();
-        pojoMap.put(id, TransportManager.convertTransportToPojo(targetTransport));
 
         writeAllPojoToFile(pojoMap);
     }
@@ -76,8 +69,7 @@ public class TransportStorageCSV implements TransportStorage {
         return resultMap;
     }
 
-    private static Map<Integer, TransportPojo> getAllPojoFromFile() throws IOException {
-        propertiesHolder = new TransportPropertiesHolder();
+    private Map<Integer, TransportPojo> getAllPojoFromFile() throws IOException {
         Map<Integer, TransportPojo> resultMap = new HashMap<>();
 
         File transportFile = new File(propertiesHolder.getCsvFilename());

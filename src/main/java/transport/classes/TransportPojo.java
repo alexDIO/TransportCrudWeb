@@ -30,6 +30,15 @@ public class TransportPojo {
         this.load = load;
     }
 
+    public TransportPojo(int id, String transportType, String mark, String color, int manufactureYear, String energySource) {
+        this.id = id;
+        this.transportType = transportType;
+        this.mark = mark;
+        this.color = color;
+        this.manufactureYear = manufactureYear;
+        this.energySource = energySource;
+    }
+
     public String getTransportType() {
         return this.transportType;
     }

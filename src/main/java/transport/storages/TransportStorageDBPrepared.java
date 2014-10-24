@@ -13,12 +13,15 @@ import java.util.Map;
  * Created by olomakovskyi on 9/11/2014.
  */
 public class TransportStorageDBPrepared extends TransportStorageDBAbstract {
-    private static TransportPropertiesHolder propertiesHolder = null;
+    private final TransportPropertiesHolder propertiesHolder;
     private static DataBaseService databaseService;
+
+    public TransportStorageDBPrepared(TransportPropertiesHolder propertiesHolder) {
+        this.propertiesHolder = propertiesHolder;
+    }
 
     @Override
     public void deleteTransport(int id) throws IOException {
-        TransportStorageManager.storedCars.remove(id);
 
         try {
             databaseService = new DataBaseService(propertiesHolder.getDriverSybase(), propertiesHolder.getConnectionUrl(), propertiesHolder.getConnectionLogin(),
@@ -35,7 +38,6 @@ public class TransportStorageDBPrepared extends TransportStorageDBAbstract {
     @Override
     public Map<Integer, Transport> getAllTransport() throws IOException {
         Map<Integer, Transport> resultMap = new HashMap<>();
-        propertiesHolder = new TransportPropertiesHolder();
         TransportPojo newPojo;
         try {
 

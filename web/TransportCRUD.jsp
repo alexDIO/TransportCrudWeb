@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: Alex
@@ -13,7 +14,17 @@
 <%@ taglib prefix="tm" uri="/WEB-INF/transportManager.tld"%>
 <%@ taglib prefix="mf" uri="/WEB-INF/compareStrings.tld" %>
 
-<% pageContext.setAttribute("holder", request.getAttribute("holder")); %>
+<%@ page import="org.springframework.web.servlet.DispatcherServlet" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="forweb.TransportMapHolder" %>
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+
+<%
+    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());
+    TransportMapHolder holder = (TransportMapHolder) context.getBean("mapHolder");
+    pageContext.setAttribute("holder", holder);
+%>
 <c:set var="buttonName" value="Add"/>
 
 <c:if test="${param['delete'] != null && param['curElemID'] != null}">

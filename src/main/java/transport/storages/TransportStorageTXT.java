@@ -6,6 +6,7 @@ import transport.classes.*;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,12 @@ import java.util.Map;
  * Created by Alex on 9/7/2014.
  */
 public class TransportStorageTXT implements TransportStorage {
-    private static TransportPropertiesHolder propertiesHolder = null;
+    private final TransportPropertiesHolder propertiesHolder;
+
+    public TransportStorageTXT(TransportPropertiesHolder propertiesHolder, Date creationDate){
+        this.propertiesHolder = propertiesHolder;
+        System.out.println(String.format("Storage was created at %s", creationDate));
+    }
 
     @Override
     public void addTransport(TransportPojo inPojo) throws IOException {
@@ -33,17 +39,6 @@ public class TransportStorageTXT implements TransportStorage {
         String newString = TransportManager.convertTransportToString(newTransport, propertiesHolder.getTextSeparator());
 
         stringMap.put(inPojo.getId(), newString);
-
-        writeAllToFile(stringMap);
-    }
-
-    @Override
-    public void updateTransport(int id) throws IOException {
-        Transport targetTransport = TransportManager.updateTransport(TransportStorageManager.storedCars.get(id));
-        TransportStorageManager.storedCars.put(id, targetTransport);
-
-        Map<Integer, String> stringMap = getAllFromFile();
-        stringMap.put(id, TransportManager.convertTransportToString(targetTransport, propertiesHolder.getTextSeparator()));
 
         writeAllToFile(stringMap);
     }
@@ -69,7 +64,6 @@ public class TransportStorageTXT implements TransportStorage {
     }
 
     public Map<Integer, String> getAllFromFile() throws IOException {
-        propertiesHolder = new TransportPropertiesHolder();
         Map<Integer, String> resultMap = new HashMap<>();
 
         File transportFile = new File(propertiesHolder.getTextFilename());

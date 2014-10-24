@@ -1,22 +1,24 @@
 package hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by olomakovskyi on 10/20/2014.
  */
 
 @Entity
-@Table(name = "t_transport")
+@Table(name = "t_transport", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "f_transportType"),
+        @UniqueConstraint(columnNames = "f_mark")
+})
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "f_transportType", discriminatorType = DiscriminatorType.STRING)
 public class TransportEntity {
     @Id
     @Column(name = "f_id")
     private int id;
 
-    @Column(name = "f_transportType")
+    @Column(name = "f_transportType", insertable = false, updatable = false)
     private String transportType;
 
     @Column(name = "f_mark")
@@ -28,17 +30,8 @@ public class TransportEntity {
     @Column(name = "f_manufactureYear")
     private int manufactureYear;
 
-    @Column(name = "f_passengersCount")
-    private int passengersCount;
-
     @Column(name = "f_energySource")
     private String energySource;
-
-    @Column(name = "f_transmission")
-    private String transmission;
-
-    @Column(name = "f_load")
-    private int load;
 
     public int getId() {
         return id;
@@ -80,35 +73,11 @@ public class TransportEntity {
         this.manufactureYear = manufactureYear;
     }
 
-    public int getPassengersCount() {
-        return passengersCount;
-    }
-
-    public void setPassengersCount(int passengersCount) {
-        this.passengersCount = passengersCount;
-    }
-
     public String getEnergySource() {
         return energySource;
     }
 
     public void setEnergySource(String energySource) {
         this.energySource = energySource;
-    }
-
-    public String getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
-
-    public int getLoad() {
-        return load;
-    }
-
-    public void setLoad(int load) {
-        this.load = load;
     }
 }
