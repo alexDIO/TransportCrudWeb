@@ -13,7 +13,7 @@ import javax.persistence.*;
 })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "f_transportType", discriminatorType = DiscriminatorType.STRING)
-public class TransportEntity {
+public abstract class TransportEntity {
     @Id
     @Column(name = "f_id")
     private int id;

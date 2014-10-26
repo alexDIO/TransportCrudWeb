@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-public class PassengerTransportEntity extends TransportEntity{
+public abstract class PassengerTransportEntity extends TransportEntity{
     @Column(name = "f_passengersCount")
     private int passengersCount;
 

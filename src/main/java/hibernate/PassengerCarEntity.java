@@ -9,7 +9,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-public class PassengerCarEntity extends PassengerTransportEntity {
+public abstract class PassengerCarEntity extends PassengerTransportEntity {
     @Column(name = "f_transmission")
     private String transmission;
 

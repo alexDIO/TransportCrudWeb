@@ -5,13 +5,13 @@ package transport.classes;
  */
 public class Truck extends Transport {
     private final String energySource = "Petrol";
-    private int load;
+    private Integer load;
 
-    public Truck(Integer id) {
-        super(id, "Truck");
+    public Truck() {
+        super("Truck");
     }
 
-    public void setLoad(int load) {
+    public void setLoad(Integer load) {
         this.load = load;
     }
 

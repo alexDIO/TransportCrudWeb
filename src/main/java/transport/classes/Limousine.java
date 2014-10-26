@@ -5,8 +5,8 @@ package transport.classes;
  */
 public class Limousine extends PassengerCar {
 
-    public Limousine(Integer id) {
-        super(id, "Limousine");
+    public Limousine() {
+        super("Limousine");
     }
 
     @Override

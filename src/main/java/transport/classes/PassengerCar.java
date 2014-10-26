@@ -6,8 +6,8 @@ package transport.classes;
 public abstract class PassengerCar extends PassengerTransport {
     protected String transmission;
 
-    protected PassengerCar(Integer id, String transportType) {
-        super(id, transportType);
+    protected PassengerCar(String transportType) {
+        super(transportType);
     }
 
     public void setTransmission(String transmission) {

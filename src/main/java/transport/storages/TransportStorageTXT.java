@@ -5,7 +5,6 @@ import transport.classes.*;
 
 
 import java.io.*;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +14,11 @@ import java.util.Map;
  */
 public class TransportStorageTXT implements TransportStorage {
     private final TransportPropertiesHolder propertiesHolder;
+    private final TransportConverter converter;
 
-    public TransportStorageTXT(TransportPropertiesHolder propertiesHolder, Date creationDate){
+    public TransportStorageTXT(TransportPropertiesHolder propertiesHolder,TransportConverter converter , Date creationDate){
         this.propertiesHolder = propertiesHolder;
+        this.converter = converter;
         System.out.println(String.format("Storage was created at %s", creationDate));
     }
 
@@ -29,14 +30,13 @@ public class TransportStorageTXT implements TransportStorage {
 
         if (stringMap.size() > 0) {
             for (Map.Entry<Integer, String> entry : stringMap.entrySet()) {
-                transportMap.put(entry.getKey(), TransportManager.convertStringToTransport(entry.getValue(), propertiesHolder.getTextSeparator()));
+                transportMap.put(entry.getKey(), converter.convertStringToTransport(entry.getValue(), propertiesHolder.getTextSeparator()));
             }
 
         }
 
-        Transport newTransport = TransportManager.convertPojoToTransport(inPojo);
-//        TransportStorageManager.storedCars.put(newTransport.getId(), newTransport);
-        String newString = TransportManager.convertTransportToString(newTransport, propertiesHolder.getTextSeparator());
+        Transport newTransport = converter.convertPojoToTransport(inPojo);
+        String newString = converter.convertTransportToString(newTransport, propertiesHolder.getTextSeparator());
 
         stringMap.put(inPojo.getId(), newString);
 
@@ -47,7 +47,6 @@ public class TransportStorageTXT implements TransportStorage {
     public void deleteTransport(int id) throws IOException {
         Map<Integer, String> stringMap = getAllFromFile();
         stringMap.remove(id);
-//        TransportStorageManager.storedCars.remove(id);
         writeAllToFile(stringMap);
     }
 
@@ -57,7 +56,7 @@ public class TransportStorageTXT implements TransportStorage {
         Map<Integer, String> strings = getAllFromFile();
 
         for (Map.Entry<Integer, String> entry : strings.entrySet()) {
-            resultMap.put(entry.getKey(), TransportManager.convertStringToTransport(entry.getValue(), propertiesHolder.getTextSeparator()));
+            resultMap.put(entry.getKey(), converter.convertStringToTransport(entry.getValue(), propertiesHolder.getTextSeparator()));
         }
 
         return resultMap;

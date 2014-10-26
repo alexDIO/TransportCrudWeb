@@ -1,7 +1,7 @@
 package forweb;
 
 import transport.classes.Transport;
-import transport.classes.TransportManager;
+import transport.classes.TransportConverter;
 import transport.classes.TransportPojo;
 import transport.storages.TransportStorage;
 import transport.storages.TransportStorageException;
@@ -17,10 +17,10 @@ import java.util.Map;
 public class TransportMapHolder {
     private Map<Integer, Transport> storedTransport;
     private TransportStorage storage;
+    private final TransportConverter converter;
 
-
-    public TransportMapHolder(TransportStorageFactory factory){
-
+    public TransportMapHolder(TransportStorageFactory factory, TransportConverter converter){
+        this.converter = converter;
         try {
             storage = factory.getStorage();
             storedTransport = storage.getAllTransport();
@@ -50,7 +50,7 @@ public class TransportMapHolder {
             e.printStackTrace();
         }
 
-        storedTransport.put(pojo.getId(), TransportManager.convertPojoToTransport(pojo));
+        storedTransport.put(pojo.getId(), converter.convertPojoToTransport(pojo));
     }
 
     public void deleteTransport(int id){

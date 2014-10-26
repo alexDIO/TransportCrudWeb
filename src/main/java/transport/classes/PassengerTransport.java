@@ -4,10 +4,10 @@ package transport.classes;
  * Created by olomakovskyi on 8/19/2014.
  */
 public abstract class PassengerTransport extends Transport {
-    protected int passengersCount;
+    protected Integer passengersCount;
 
-    protected PassengerTransport(Integer id, String transportType) {
-        super(id, transportType);
+    protected PassengerTransport(String transportType) {
+        super(transportType);
     }
 
     public void setPassengersCount(int passengersCount) {

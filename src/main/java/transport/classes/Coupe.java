@@ -6,8 +6,8 @@ package transport.classes;
 public class Coupe extends PassengerCar {
     private final int passengersCount = 2;
 
-    public Coupe(Integer id) {
-        super(id, "Coupe");
+    public Coupe() {
+        super("Coupe");
     }
 
     public int getPassengersCount() {

@@ -6,23 +6,80 @@
     <bean id="propertiesHolder" class="transport.TransportPropertiesHolder">
         <constructor-arg value="transport.properties"/>
     </bean>
+
+    <bean id="truckEntity" class="hibernate.TruckEntity"/>
+    <bean id="busEntity" class="hibernate.BusEntity"/>
+    <bean id="trolleybusEntity" class="hibernate.TrolleybusEntity"/>
+    <bean id="tramEntity" class="hibernate.TramEntity"/>
+    <bean id="coupeEntity" class="hibernate.CoupeEntity"/>
+    <bean id="sedanEntity" class="hibernate.SedanEntity"/>
+    <bean id="limousineEntity" class="hibernate.LimousineEntity"/>
+    <bean id="transportEntityFactory" class="hibernate.TransportEntityFactory">
+        <constructor-arg>
+            <map>
+                <entry key="truck" value-ref="truckEntity"/>
+                <entry key="bus" value-ref="busEntity"/>
+                <entry key="trolleybus" value-ref="trolleybusEntity"/>
+                <entry key="tram" value-ref="tramEntity"/>
+                <entry key="coupe" value-ref="coupeEntity"/>
+                <entry key="sedan" value-ref="sedanEntity"/>
+                <entry key="limousine" value-ref="limousineEntity"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="truck" class="transport.classes.Truck"/>
+    <bean id="bus" class="transport.classes.Bus"/>
+    <bean id="trolleybus" class="transport.classes.TrolleyBus"/>
+    <bean id="tram" class="transport.classes.Tram"/>
+    <bean id="coupe" class="transport.classes.Coupe"/>
+    <bean id="sedan" class="transport.classes.Sedan"/>
+    <bean id="limousine" class="transport.classes.Limousine"/>
+    <bean id="transportFactory" class="transport.classes.TransportFactory">
+        <constructor-arg>
+            <map>
+                <entry key="truck" value-ref="truck"/>
+                <entry key="bus" value-ref="bus"/>
+                <entry key="trolleybus" value-ref="trolleybus"/>
+                <entry key="tram" value-ref="tram"/>
+                <entry key="coupe" value-ref="coupe"/>
+                <entry key="sedan" value-ref="sedan"/>
+                <entry key="limousine" value-ref="limousine"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="converter" class="transport.classes.TransportConverter">
+        <constructor-arg index="0" ref="transportEntityFactory"/>
+        <constructor-arg index="1" ref="transportFactory"/>
+    </bean>
     <bean id="storageTXT" class="transport.storages.TransportStorageTXT">
         <constructor-arg ref="propertiesHolder"/>
+        <constructor-arg ref="converter"/>
         <constructor-arg><bean class="java.util.Date"/> </constructor-arg>
     </bean>
     <bean id="storageCSV" class="transport.storages.TransportStorageCSV">
         <constructor-arg ref="propertiesHolder"/>
+        <constructor-arg ref="converter"/>
     </bean>
     <bean id="storageXLS" class="transport.storages.TransportStorageXLS">
         <constructor-arg ref="propertiesHolder"/>
+        <constructor-arg ref="converter"/>
     </bean>
-    <bean id="storageDB" class="transport.storages.TransportStorageDB">
-        <constructor-arg ref="propertiesHolder"/>
+    <bean id="storageDBAbstract" class="transport.storages.TransportStorageDBAbstract" abstract="true">
+        <constructor-arg ref="converter"/>
     </bean>
-    <bean id="storageDBPrepared" class="transport.storages.TransportStorageDBPrepared">
-        <constructor-arg ref="propertiesHolder"/>
-    </bean>
-    <bean id="storageHibernate" class="transport.storages.TransportStorageHibernate"/>
+    <!--<bean id="storageDB" class="transport.storages.TransportStorageDB">-->
+        <!--<constructor-arg ref="propertiesHolder"/>-->
+        <!--<constructor-arg ref="converter"/>-->
+    <!--</bean>-->
+    <!--<bean id="storageDBPrepared" class="transport.storages.TransportStorageDBPrepared">-->
+        <!--<constructor-arg ref="propertiesHolder"/>-->
+        <!--<constructor-arg ref="converter"/>-->
+    <!--</bean>-->
+    <!--<bean id="storageHibernate" class="transport.storages.TransportStorageHibernate">-->
+        <!--<constructor-arg ref="converter"/>-->
+    <!--</bean>-->
     <bean id="storageFactory" class="transport.storages.TransportStorageFactory">
         <constructor-arg index="0" ref="propertiesHolder"/>
         <constructor-arg index="1">
@@ -30,36 +87,39 @@
                 <entry key="txt" value-ref="storageTXT"/>
                 <entry key="csv" value-ref="storageCSV"/>
                 <entry key="xls" value-ref="storageXLS"/>
-                <entry key="db" value-ref="storageDB"/>
-                <entry key="db.prepared" value-ref="storageDBPrepared"/>
-                <entry key="hibernate" value-ref="storageHibernate"/>
+                <!--<entry key="db" value-ref="storageDB"/>-->
+                <!--<entry key="db.prepared" value-ref="storageDBPrepared"/>-->
+                <!--<entry key="hibernate" value-ref="storageHibernate"/>-->
             </map>
         </constructor-arg>
     </bean>
     <bean id="mapHolder" class="forweb.TransportMapHolder">
+        <constructor-arg ref="converter"/>
         <constructor-arg ref="storageFactory"/>
     </bean>
-    <bean id="databaseService" class="transport.DataBaseService">
-        <constructor-arg index="0">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getDriverSybase"/>
-        </constructor-arg>
-        <constructor-arg index="1">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionUrl"/>
-        </constructor-arg>
-        <constructor-arg index="2">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionLogin"/>
-        </constructor-arg>
-        <constructor-arg index="3">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionPassword"/>
-        </constructor-arg>
-        <constructor-arg index="4">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlInsert"/>
-        </constructor-arg>
-        <constructor-arg index="5">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlDelete"/>
-        </constructor-arg>
-        <constructor-arg index="6">
-            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlSelect"/>
-        </constructor-arg>
-    </bean>
+    <!--<bean id="databaseService" class="transport.DataBaseService">-->
+        <!--<constructor-arg index="0">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getDriverSybase"/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg index="1">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionUrl"/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg index="2">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionLogin"/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg index="3">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionPassword"/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg index="4">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlInsert"/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg index="5">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlDelete"/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg index="6">-->
+            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlSelect"/>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+
+
 </beans>

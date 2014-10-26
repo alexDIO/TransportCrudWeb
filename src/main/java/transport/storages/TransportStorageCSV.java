@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import transport.*;
 import transport.classes.Transport;
-import transport.classes.TransportManager;
+import transport.classes.TransportConverter;
 import transport.classes.TransportPojo;
 
 import java.util.HashMap;
@@ -28,17 +28,19 @@ import java.util.Map;
  */
 public class TransportStorageCSV implements TransportStorage {
     private final TransportPropertiesHolder propertiesHolder;
+    private final TransportConverter converter;
 
-    public TransportStorageCSV(TransportPropertiesHolder propertiesHolder) {
+    public TransportStorageCSV(TransportPropertiesHolder propertiesHolder, TransportConverter converter) {
         this.propertiesHolder = propertiesHolder;
+        this.converter = converter;
     }
 
     @Override
     public void addTransport(TransportPojo inPojo) throws IOException {
 
         //creation of Transport Object and Pojo for writing to csv
-        Transport newTransport = TransportManager.convertPojoToTransport(inPojo);
-        TransportPojo newPojo = TransportManager.convertTransportToPojo(newTransport);
+        Transport newTransport = converter.convertPojoToTransport(inPojo);
+        TransportPojo newPojo = converter.convertTransportToPojo(newTransport);
 
         //getting of all existing pojo from file
         Map<Integer, TransportPojo> pojoMap = getAllPojoFromFile();
@@ -51,7 +53,6 @@ public class TransportStorageCSV implements TransportStorage {
     public void deleteTransport(int id) throws IOException {
         Map<Integer, TransportPojo> pojoMap = getAllPojoFromFile();
         pojoMap.remove(id);
-//        TransportStorageManager.storedCars.remove(id);
         writeAllPojoToFile(pojoMap);
 
     }
@@ -63,7 +64,7 @@ public class TransportStorageCSV implements TransportStorage {
 
         if (pojoMap.size() > 0) {
             for (Map.Entry<Integer, TransportPojo> entry : pojoMap.entrySet()) {
-                resultMap.put(entry.getKey(), TransportManager.convertPojoToTransport(entry.getValue()));
+                resultMap.put(entry.getKey(), converter.convertPojoToTransport(entry.getValue()));
             }
         }
         return resultMap;

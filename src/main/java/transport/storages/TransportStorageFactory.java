@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by olomakovskyi on 9/4/2014.
  */
 public class TransportStorageFactory {
-    //pattern factory
+
     private final TransportPropertiesHolder propertiesHolder;
     private final Map<String, TransportStorage> map;
 
@@ -19,6 +19,10 @@ public class TransportStorageFactory {
     }
 
     public TransportStorage getStorage() throws IOException, TransportStorageException {
-       return map.get(propertiesHolder.getSource());
+       if (map.containsKey(propertiesHolder.getSource())) {
+           return map.get(propertiesHolder.getSource());
+       } else {
+           throw new TransportStorageException();
+       }
     }
 }

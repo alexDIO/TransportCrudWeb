@@ -6,8 +6,8 @@ package transport.classes;
 public class Bus extends PassengerTransport {
     private final String energySource = "Petrol";
 
-    public Bus(Integer id) {
-        super(id, "Bus");
+    public Bus() {
+        super("Bus");
     }
 
     public String getEnergySource() {

@@ -16,16 +16,17 @@ import java.util.Map;
  */
 public class TransportStorageXLS implements TransportStorage {
     private final TransportPropertiesHolder propertiesHolder;
+    private final TransportConverter converter;
 
-    public TransportStorageXLS(TransportPropertiesHolder propertiesHolder) {
+    public TransportStorageXLS(TransportPropertiesHolder propertiesHolder, TransportConverter converter) {
         this.propertiesHolder = propertiesHolder;
+        this.converter = converter;
     }
 
     @Override
     public void addTransport(TransportPojo inPojo) throws IOException {
-        Transport newTransport = TransportManager.convertPojoToTransport(inPojo);
-//        TransportStorageManager.storedCars.put(newTransport.getId(), newTransport);
-        TransportPojo newPojo = TransportManager.convertTransportToPojo(newTransport);
+        Transport newTransport = converter.convertPojoToTransport(inPojo);
+        TransportPojo newPojo = converter.convertTransportToPojo(newTransport);
 
         File transportFile = new File(propertiesHolder.getXlsFilename());
         HSSFWorkbook workbook;
@@ -58,7 +59,6 @@ public class TransportStorageXLS implements TransportStorage {
 
     @Override
     public void deleteTransport(int id) throws IOException {
-//        TransportStorageManager.storedCars.remove(id);
 
         FileInputStream inFile = new FileInputStream(new File(propertiesHolder.getXlsFilename()));
         HSSFWorkbook workbook = new HSSFWorkbook(inFile);
@@ -99,7 +99,7 @@ public class TransportStorageXLS implements TransportStorage {
             inFile.close();
 
             for (Map.Entry<Integer, TransportPojo> entry : pojoMap.entrySet()) {
-                resultMap.put(entry.getKey(), TransportManager.convertPojoToTransport(entry.getValue()));
+                resultMap.put(entry.getKey(), converter.convertPojoToTransport(entry.getValue()));
             }
         }
 

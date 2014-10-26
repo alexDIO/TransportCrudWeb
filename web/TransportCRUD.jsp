@@ -14,10 +14,8 @@
 <%@ taglib prefix="tm" uri="/WEB-INF/transportManager.tld"%>
 <%@ taglib prefix="mf" uri="/WEB-INF/compareStrings.tld" %>
 
-<%@ page import="org.springframework.web.servlet.DispatcherServlet" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="forweb.TransportMapHolder" %>
-<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 
 <%

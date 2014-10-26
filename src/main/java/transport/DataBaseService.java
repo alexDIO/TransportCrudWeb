@@ -3,8 +3,8 @@ package transport;
 import java.sql.*;
 
 /**
- * Created by olomakovskyi on 9/2/2014.
- */
+* Created by olomakovskyi on 9/2/2014.
+*/
 public class DataBaseService {
     private final PreparedStatement insertStatement;
     private final PreparedStatement deleteStatement;
