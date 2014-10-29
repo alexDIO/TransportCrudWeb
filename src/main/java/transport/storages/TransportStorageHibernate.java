@@ -1,5 +1,6 @@
 package transport.storages;
 
+import hibernate.ManufacturerEntity;
 import hibernate.TransportEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -22,10 +23,12 @@ import java.util.Map;
 public class TransportStorageHibernate implements TransportStorage {
     private SessionFactory factory;
     private final TransportConverter converter;
+    private ManufacturerStorage manufacturers;
 
-    public TransportStorageHibernate(TransportConverter converter) {
+    public TransportStorageHibernate(TransportConverter converter, ManufacturerStorage manufacturers) {
         factory = new Configuration().configure().buildSessionFactory();
         this.converter = converter;
+        this.manufacturers = manufacturers;
     }
 
     @Override
@@ -35,6 +38,8 @@ public class TransportStorageHibernate implements TransportStorage {
         try {
             tx = session.beginTransaction();
             TransportEntity transport = converter.convertPojoToTransportEntity(inPojo);
+            ManufacturerEntity manufacturer = manufacturers.getManufacturer(inPojo.getMark());
+            transport.setMark(manufacturer);
             session.save(transport);
             tx.commit();
         } catch (HibernateException e) {
@@ -80,7 +85,7 @@ public class TransportStorageHibernate implements TransportStorage {
         }
 
         for (TransportEntity elem : list) {
-            TransportPojo pojo = new TransportPojo(elem.getId(), elem.getTransportType(), elem.getMark(), elem.getColor(), elem.getManufactureYear(), /*elem.getPassengersCount(),*/
+            TransportPojo pojo = new TransportPojo(elem.getId(), elem.getTransportType(), elem.getMark().getDescription(), elem.getColor(), elem.getManufactureYear(), /*elem.getPassengersCount(),*/
                     elem.getEnergySource()/*, elem.getTransmission(), elem.getLoad()*/);
             resultMap.put(elem.getId(), converter.convertPojoToTransport(pojo));
         }

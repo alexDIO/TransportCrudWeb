@@ -21,8 +21,9 @@ public abstract class TransportEntity {
     @Column(name = "f_transportType", insertable = false, updatable = false)
     private String transportType;
 
-    @Column(name = "f_mark")
-    private String mark;
+    @ManyToOne
+    @JoinColumn (name = "f_mark")
+    private ManufacturerEntity mark;
 
     @Column(name = "f_color")
     private String color;
@@ -49,11 +50,11 @@ public abstract class TransportEntity {
         this.transportType = transportType;
     }
 
-    public String getMark() {
+    public ManufacturerEntity getMark() {
         return mark;
     }
 
-    public void setMark(String mark) {
+    public void setMark(ManufacturerEntity mark) {
         this.mark = mark;
     }
 

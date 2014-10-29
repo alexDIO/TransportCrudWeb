@@ -4,11 +4,11 @@
 
 <hibernate-configuration>
     <session-factory>
-        <!--<property name="hibernate.dialect">org.hibernate.dialect.SybaseAnywhereDialect</property>-->
-        <!--<property name="hibernate.connection.driver_class">com.sybase.jdbc4.jdbc.SybDriver</property>-->
-        <!--<property name="hibernate.connection.url">jdbc:sybase:Tds:dio32:2638/IDAS_DEV</property>-->
-        <!--<property name="hibernate.connection.username">AIFMD_DEV</property>-->
-        <!--<property name="hibernate.connection.password">AIFMD_DEV1234!</property>-->
+        <property name="hibernate.dialect">org.hibernate.dialect.SybaseAnywhereDialect</property>
+        <property name="hibernate.connection.driver_class">com.sybase.jdbc4.jdbc.SybDriver</property>
+        <property name="hibernate.connection.url">jdbc:sybase:Tds:dio32:2638/IDAS_DEV</property>
+        <property name="hibernate.connection.username">AIFMD_DEV</property>
+        <property name="hibernate.connection.password">AIFMD_DEV1234!</property>
 
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
@@ -23,5 +23,7 @@
         <mapping class="hibernate.LimousineEntity"/>
         <mapping class="hibernate.SedanEntity"/>
         <mapping class="hibernate.CoupeEntity"/>
+
+        <mapping class="hibernate.ManufacturerEntity"/>
     </session-factory>
 </hibernate-configuration>

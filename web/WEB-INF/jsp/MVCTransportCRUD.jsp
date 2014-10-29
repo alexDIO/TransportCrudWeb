@@ -15,21 +15,15 @@
 <%@ taglib prefix="mf" uri="/WEB-INF/compareStrings.tld" %>
 
 <%@ page import="org.springframework.context.ApplicationContext" %>
-<%@ page import="forweb.TransportMapHolder" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="forweb.TimeManager" %>
-<%@ page import="transport.storages.ManufacturerStorage" %>
 
 <%
-    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());
-    TransportMapHolder holder = (TransportMapHolder) context.getBean("mapHolder");
-    TimeManager timeManagerSession = (TimeManager) context.getBean("timeManagerSession");
-    TimeManager timeManagerSingleton = (TimeManager) context.getBean("timeManagerSingleton");
-    ManufacturerStorage manufacturers = (ManufacturerStorage) context.getBean("manufacturers");
-    pageContext.setAttribute("holder", holder);
-    pageContext.setAttribute("timeManagerSession", timeManagerSession);
-    pageContext.setAttribute("timeManagerSingleton", timeManagerSingleton);
-    pageContext.setAttribute("manufacturers", manufacturers);
+//    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());
+//    TimeManager timeManagerSession = (TimeManager) context.getBean("timeManagerSession");
+//    TimeManager timeManagerSingleton = (TimeManager) context.getBean("timeManagerSingleton");
+//    pageContext.setAttribute("timeManagerSession", timeManagerSession);
+//    pageContext.setAttribute("timeManagerSingleton", timeManagerSingleton);
 %>
 <c:set var="buttonName" value="Add"/>
 
@@ -169,7 +163,7 @@
     </script>
 </head>
 <body onload="showHide()">
-
+    <h1>This is Spring MVC</h1>
     <form method="get">
         <table>
             <tr>

@@ -57,7 +57,7 @@ public class TransportConverter{
     }
 
     public Transport convertStringToTransport(String inString, String separator) {
-        String[] array = inString.split(String.format("\\%s", separator));
+        String[] array = inString.replace("\n", "").split(String.format("\\%s", separator));
         Transport resultTransport = transportFactory.getTransport(array[1]);
 
         resultTransport.setId(Integer.parseInt(array[0]));
@@ -114,6 +114,7 @@ public class TransportConverter{
         } else {
             builder.append(0);
         }
+        builder.append("\n");
 
         return builder.toString();
     }
@@ -173,7 +174,6 @@ public class TransportConverter{
         TransportEntity resultTransport = entityFactory.getTransportEntity(inPojo.getTransportType());
 
         resultTransport.setId(inPojo.getId());
-        resultTransport.setMark(inPojo.getMark());
         resultTransport.setColor(inPojo.getColor());
         resultTransport.setManufactureYear(inPojo.getManufactureYear());
         resultTransport.setEnergySource(inPojo.getEnergySource());

@@ -10,15 +10,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_manufacturers", uniqueConstraints =
-        @UniqueConstraint(columnNames = "f_manufacturer")
+        @UniqueConstraint(columnNames = "f_description")
 )
 public class ManufacturerEntity {
     @Id
-    @Column (name = "f_manufacturer", unique = true, nullable = false)
-    private String manufacturer;
-    private List<TransportEntity> entityList = new ArrayList<>();
+    @Column (name = "f_description", nullable = false)
+    private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "f_manufacturers")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mark")
+
+    private List<TransportEntity> entityList;
 
     public List<TransportEntity> getEntityList() {
         return entityList;
@@ -28,11 +29,11 @@ public class ManufacturerEntity {
         this.entityList = entityList;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getDescription() {
+        return description;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -69,17 +69,18 @@
     <bean id="storageDBAbstract" class="transport.storages.TransportStorageDBAbstract" abstract="true">
         <constructor-arg ref="converter"/>
     </bean>
-    <!--<bean id="storageDB" class="transport.storages.TransportStorageDB">-->
-        <!--<constructor-arg ref="propertiesHolder"/>-->
-        <!--<constructor-arg ref="converter"/>-->
-    <!--</bean>-->
-    <!--<bean id="storageDBPrepared" class="transport.storages.TransportStorageDBPrepared">-->
-        <!--<constructor-arg ref="propertiesHolder"/>-->
-        <!--<constructor-arg ref="converter"/>-->
-    <!--</bean>-->
-    <!--<bean id="storageHibernate" class="transport.storages.TransportStorageHibernate">-->
-        <!--<constructor-arg ref="converter"/>-->
-    <!--</bean>-->
+    <bean id="storageDB" class="transport.storages.TransportStorageDB">
+        <constructor-arg ref="propertiesHolder"/>
+        <constructor-arg ref="converter"/>
+    </bean>
+    <bean id="storageDBPrepared" class="transport.storages.TransportStorageDBPrepared">
+        <constructor-arg ref="propertiesHolder"/>
+        <constructor-arg ref="converter"/>
+    </bean>
+    <bean id="storageHibernate" class="transport.storages.TransportStorageHibernate">
+        <constructor-arg ref="converter"/>
+        <constructor-arg ref="manufacturers"/>
+    </bean>
     <bean id="storageFactory" class="transport.storages.TransportStorageFactory">
         <constructor-arg index="0" ref="propertiesHolder"/>
         <constructor-arg index="1">
@@ -87,9 +88,9 @@
                 <entry key="txt" value-ref="storageTXT"/>
                 <entry key="csv" value-ref="storageCSV"/>
                 <entry key="xls" value-ref="storageXLS"/>
-                <!--<entry key="db" value-ref="storageDB"/>-->
-                <!--<entry key="db.prepared" value-ref="storageDBPrepared"/>-->
-                <!--<entry key="hibernate" value-ref="storageHibernate"/>-->
+                <entry key="db" value-ref="storageDB"/>
+                <entry key="db.prepared" value-ref="storageDBPrepared"/>
+                <entry key="hibernate" value-ref="storageHibernate"/>
             </map>
         </constructor-arg>
     </bean>
@@ -121,5 +122,9 @@
         <!--</constructor-arg>-->
     <!--</bean>-->
 
+    <bean id="manufacturers" class="transport.storages.ManufacturerStorage"/>
+
+    <!--<bean id="timeManagerSession" class="forweb.TimeManager" scope="session"/>-->
+    <!--<bean id="timeManagerSingleton" class="forweb.TimeManager" scope="singleton"/>-->
 
 </beans>
