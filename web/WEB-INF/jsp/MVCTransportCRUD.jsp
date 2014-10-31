@@ -14,17 +14,13 @@
 <%@ taglib prefix="tm" uri="/WEB-INF/transportManager.tld"%>
 <%@ taglib prefix="mf" uri="/WEB-INF/compareStrings.tld" %>
 
-<%@ page import="org.springframework.context.ApplicationContext" %>
-<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="forweb.TimeManager" %>
-
-<%
-//    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());
-//    TimeManager timeManagerSession = (TimeManager) context.getBean("timeManagerSession");
-//    TimeManager timeManagerSingleton = (TimeManager) context.getBean("timeManagerSingleton");
-//    pageContext.setAttribute("timeManagerSession", timeManagerSession);
-//    pageContext.setAttribute("timeManagerSingleton", timeManagerSingleton);
-%>
+<%--<%--%>
+<%--//    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());--%>
+<%--//    TimeManager timeManagerSession = (TimeManager) context.getBean("timeManagerSession");--%>
+<%--//    TimeManager timeManagerSingleton = (TimeManager) context.getBean("timeManagerSingleton");--%>
+<%--//    pageContext.setAttribute("timeManagerSession", timeManagerSession);--%>
+<%--//    pageContext.setAttribute("timeManagerSingleton", timeManagerSingleton);--%>
+<%--%>--%>
 <c:set var="buttonName" value="Add"/>
 
 <c:if test="${param['delete'] != null && param['curElemID'] != null}">
@@ -274,10 +270,19 @@
     </table>
     <table>
         <tr>
-            <span>You using application during ${timeManagerSession.duration}</span>
+            <td>
+                <a href="<c:url value="j_spring_security_logout" />" > Logout</a>
+            </td>
         </tr>
         <tr>
-            <span>Application running during ${timeManagerSingleton.duration}</span>
+            <td>
+                <span>You using application during ${timeManagerSession.duration}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Application running during ${timeManagerSingleton.duration}</span>
+            </td>
         </tr>
     </table>
 </body>

@@ -21,6 +21,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="timeManagerSession" class="forweb.TimeManager" scope="prototype"/>
+    <bean id="timeManagerSession" class="forweb.TimeManager" scope="session"/>
     <bean id="timeManagerSingleton" class="forweb.TimeManager" scope="singleton"/>
 </beans>

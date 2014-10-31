@@ -3,13 +3,11 @@ package forweb.mvc;
 import forweb.TimeManager;
 import forweb.TransportMapHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import transport.storages.ManufacturerStorage;
 
 import javax.annotation.Resource;
@@ -19,6 +17,7 @@ import javax.annotation.Resource;
  */
 
 @Controller
+@Scope("session")
 public class CRUDController {
     @Autowired
     private TransportMapHolder holder;
@@ -38,6 +37,18 @@ public class CRUDController {
         model.addAttribute("timeManagerSession", timeManagerSession);
         model.addAttribute("timeManagerSingleton", timeManagerSingleton);
         return "MVCTransportCRUD";
+    }
+
+    @RequestMapping(value = "/login")
+    public String login(ModelMap model){
+        return "login_page";
+    }
+
+    @RequestMapping(value="/loginError")
+    public String loginError(ModelMap model) {
+        model.addAttribute("error", "true");
+        return "login_page";
+
     }
 
     public TransportMapHolder getHolder() {

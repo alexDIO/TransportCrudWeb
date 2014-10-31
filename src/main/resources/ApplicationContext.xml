@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-lazy-init="true">
 
     <bean id="propertiesHolder" class="transport.TransportPropertiesHolder">
         <constructor-arg value="transport.properties"/>
@@ -98,29 +99,29 @@
         <constructor-arg ref="converter"/>
         <constructor-arg ref="storageFactory"/>
     </bean>
-    <!--<bean id="databaseService" class="transport.DataBaseService">-->
-        <!--<constructor-arg index="0">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getDriverSybase"/>-->
-        <!--</constructor-arg>-->
-        <!--<constructor-arg index="1">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionUrl"/>-->
-        <!--</constructor-arg>-->
-        <!--<constructor-arg index="2">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionLogin"/>-->
-        <!--</constructor-arg>-->
-        <!--<constructor-arg index="3">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionPassword"/>-->
-        <!--</constructor-arg>-->
-        <!--<constructor-arg index="4">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlInsert"/>-->
-        <!--</constructor-arg>-->
-        <!--<constructor-arg index="5">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlDelete"/>-->
-        <!--</constructor-arg>-->
-        <!--<constructor-arg index="6">-->
-            <!--<bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlSelect"/>-->
-        <!--</constructor-arg>-->
-    <!--</bean>-->
+    <bean id="databaseService" class="transport.DataBaseService">
+        <constructor-arg index="0">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getDriverSybase"/>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionUrl"/>
+        </constructor-arg>
+        <constructor-arg index="2">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionLogin"/>
+        </constructor-arg>
+        <constructor-arg index="3">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getConnectionPassword"/>
+        </constructor-arg>
+        <constructor-arg index="4">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlInsert"/>
+        </constructor-arg>
+        <constructor-arg index="5">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlDelete"/>
+        </constructor-arg>
+        <constructor-arg index="6">
+            <bean class="java.lang.String" factory-bean="propertiesHolder" factory-method="getSqlSelect"/>
+        </constructor-arg>
+    </bean>
 
     <bean id="manufacturers" class="transport.storages.ManufacturerStorage"/>
 

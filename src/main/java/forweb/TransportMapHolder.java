@@ -1,5 +1,6 @@
 package forweb;
 
+import org.springframework.stereotype.Component;
 import transport.classes.Transport;
 import transport.classes.TransportConverter;
 import transport.classes.TransportPojo;
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * Created by olomakovskyi on 10/9/2014.
  */
+
 public class TransportMapHolder {
     private Map<Integer, Transport> storedTransport;
     private TransportStorage storage;
